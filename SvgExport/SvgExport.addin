@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>SVG Export 01</Text>
+    <Description>Export room boundary to SVG node.js web server</Description>
+    <Assembly>SvgExport.dll</Assembly>
+    <FullClassName>SvgExport.Command01</FullClassName>
+    <ClientId>7032cdda-521f-472f-ae66-21c2ad0f97d4</ClientId>
+    <VendorId>TBC_</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>
