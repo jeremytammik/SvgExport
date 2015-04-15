@@ -18,5 +18,5 @@ Jeremy Tammik, [The Building Coder](http://thebuildingcoder.typepad.com) and
 
 ## License
 
-This sample is licensed under the terms of the [Apache License 2](http://www.apache.org/licenses/LICENSE-2.0).
+This sample is licensed under the terms of the [MIT License](http://www.apache.org/licenses/LICENSE-2.0).
 Please see the [LICENSE](LICENSE) file for full details.
