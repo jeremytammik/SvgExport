@@ -16,7 +16,7 @@ using BoundarySegment = Autodesk.Revit.DB.BoundarySegment;
 namespace SvgExport
 {
   [Transaction( TransactionMode.ReadOnly )]
-  public class Command01 : IExternalCommand
+  public class Command : IExternalCommand
   {
     const int _target_square_size = 100;
 
@@ -129,7 +129,7 @@ namespace SvgExport
       int y = (int) ( p.Y + 0.5 );
 
       // The Revit Y coordinate points upwards,
-      // the SVG one down.
+      // the SVG one down, so flip the Y coord.
 
       y = -y;
 
@@ -142,7 +142,8 @@ namespace SvgExport
     /// Generate and return an SVG path definition to
     /// represent the given room boundary loop, scaled 
     /// from the given bounding box to fit into a 
-    /// 100 x 100 canvas.
+    /// 100 x 100 canvas. Actually, the size is 
+    /// determined by _target_square_size.
     /// </summary>
     string GetSvgPathFrom(
       BoundingBoxXYZ bb,
@@ -166,22 +167,21 @@ namespace SvgExport
       XYZ p; // segment start point
       XYZ q = null; // segment end point
 
-      int x, y;
-      string sxy;
-
       foreach( BoundarySegment seg in loop )
       {
+        Curve curve = seg.GetCurve();
+
         // Todo: handle non-linear curve.
         // Especially: if two long lines have a 
         // short arc in between them, skip the arc
         // and extend both lines.
 
-        p = seg.Curve.GetEndPoint( 0 );
+        p = curve.GetEndPoint( 0 );
 
         Debug.Assert( null == q || q.IsAlmostEqualTo( p ),
           "expected last endpoint to equal current start point" );
 
-        q = seg.Curve.GetEndPoint( 1 );
+        q = curve.GetEndPoint( 1 );
 
         if( null == p0 )
         {
@@ -243,6 +243,7 @@ namespace SvgExport
 
       opt.SpatialElementBoundaryLocation =
         SpatialElementBoundaryLocation.Center; // loops closed
+
       //SpatialElementBoundaryLocation.Finish; // loops not closed
 
       IList<IList<BoundarySegment>> loops
